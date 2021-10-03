@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, Button, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
     return (
         <View style={StyleSheet.container}>
             <Text>Login Screen</Text>
