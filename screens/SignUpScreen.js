@@ -5,18 +5,15 @@ import FormInput from "../components/FormInput";
 import SocialButton from "../components/SocialButton";
 
 
-const LoginScreen = ({ navigation }) => {
+const SignUpScreen = ({ navigation }) => {
 
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [confirmPassword, setConfirmPassword] = useState();
     return (
         <View style={styles.container}>
-            <Image 
-                source={require('../assets/rn-social-logo.png')}
-                style={styles.logo}
-            />
-            <Text style={styles.text}>RN Social App</Text>
+            <Text style={styles.text}>Create an account</Text>
             <FormInput
                 labelValue={email}
                 onChangeText={(userEmail) => setEmail(userEmail)}
@@ -33,33 +30,44 @@ const LoginScreen = ({ navigation }) => {
                 placeholderText="Password"
                 iconType="lock"
                 secureTextEntry={true}
-
+            />
+            <FormInput
+                labelValue={confirmPassword}
+                onChangeText={(userPassword) => setPassword(userPassword)}
+                placeholderText="Confirm Password"
+                iconType="lock"
+                secureTextEntry={true}
             />
             <FormButton 
-                buttonTitle="Sign In"
+                buttonTitle="Sign Up"
                 onPress={() => alert('Sign In Clicked!')}
             />
-            <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
-                <Text style={styles.navButtonText}>Forgot Password?</Text>
-            </TouchableOpacity>
+            <View style={styles.textPrivate}>
+                <Text style={styles.color_textPrivate}>By registering, you confirm that you accept our</Text>
+                <TouchableOpacity onPress={() => alert('Terms Clicked!')}>
+                    <Text style={[styles.color_textPrivate], {color: '#e88832'}}>Terms of service</Text>
+                </TouchableOpacity>
+                <Text style={styles.color_textPrivate}> and </Text>
+                <Text style={[styles.color_textPrivate], {color: '#e88832'}}>Privacy Policy</Text>
+            </View>
 
             <SocialButton 
-            buttonTitle="Sign In with Facebook"
+            buttonTitle="Sign Up with Facebook"
             btnType="facebook"
             color="#4867aa"
             backgroundColor="#e6eaf4"
             onPress={() => {}}
             />
             <SocialButton 
-            buttonTitle="Sign In with Google"
+            buttonTitle="Sign Up with Google"
             btnType="google"
             color="#de4d41"
             backgroundColor="#f5e7ea"
             onPress={() => {}}
             />
 
-            <TouchableOpacity style={styles.forgotButton} onPress={() => navigation.navigate('Signup')}>
-                <Text style={styles.navButtonText}>Don't have an account? Create here</Text>
+            <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.navButtonText}>Have an account? Sign In</Text>
             </TouchableOpacity>
         </View>
     );
@@ -73,11 +81,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 20,
     },
-    logo: {
-        height: 150,
-        width: 150,
-        resizeMode: 'cover',
-    },
     text: {
         //fontFamily: 'Kufam-SemiBoldItalic',
         fontSize: 28,
@@ -87,15 +90,23 @@ const styles = StyleSheet.create({
     navButton: {
         marginTop: 15,
     },
-    forgotButton: {
-        marginVertical: 35,
-    },
     navButtonText: {
         fontSize: 18,
         fontWeight: '500',
         color: '#2e64e5',
         //fontFamily: 'Lato-Regular',
     },
+    textPrivate: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginVertical: 35,
+        justifyContent: 'center'
+    },
+    color_textPrivate: {
+        fontSize: 13,
+        fontWeight: '400',
+        color: 'grey',
+    },
 });
 
-export default LoginScreen;
+export default SignUpScreen;

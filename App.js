@@ -1,37 +1,20 @@
-// import { StatusBar } from 'expo-status-bar';
-// import React from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Open up App.js to start working on your app!</Text>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
 import * as React from 'react';
 import { View, Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import OnboardingScreen from './screens/OnboardingScreen';
 import LoginScreen from './screens/LoginScreen'
-import AsyncStorage
- from '@react-native-async-storage/async-storage';
-import { Value } from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SignUpScreen from './screens/SignUpScreen';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+
 const Stack = createNativeStackNavigator();
+
 
 const App = () => {
   const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
+  let routeName;
   React.useEffect(() => {
       AsyncStorage.getItem('alreadyLaunched').then(value => {
         if(value == null){
@@ -48,22 +31,57 @@ const App = () => {
     return null;
   }
   else if(isFirstLaunch === true){
-    <NavigationContainer>
-      <Stack.Navigator
-        headerMode="none"
-        screenOptions={{
-          headerShown: false
-        }}
-        //initialRouteName="Onboarding"
-      >
-        <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    routeName = 'Onboarding'
   }
   else{
-    return <LoginScreen/>
+    //return <LoginScreen/>
+    routeName = 'Login'
   }
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        // screenOptions={{
+        //   headerShown: false
+        // }}
+        initialRouteName={routeName}
+      >
+        <Stack.Screen 
+          name="Onboarding" 
+          component={OnboardingScreen} 
+          options={{headerShown: false}}
+          />
+        <Stack.Screen 
+          name="Login" 
+          component={LoginScreen} 
+          options={{headerShown: false}}
+          />
+        <Stack.Screen 
+          name="Signup" 
+          component={SignUpScreen} 
+          options={({navigation}) => ({
+            title: '',
+            headerStyle: {
+                backgroundColor: '#f9fafd',
+                shadowColor: '#f9fafd',
+            },
+            headerShadowVisible: false,
+            headerLeft: () => (
+              <View style={{marginLeft: 5}}>
+                <FontAwesome.Button 
+                name="long-arrow-left"
+                size={25}
+                backgroundColor="#f9fafd"
+                color="#333"
+                onPress={() => navigation.navigate('Login')}
+              />
+              </View>
+            ),
+          })}
+          />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
 
 }
 
